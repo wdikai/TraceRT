@@ -1,0 +1,116 @@
+﻿<UserControl
+    x:Class="TraceRT.Views.SettingsView"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:TraceRT.Views"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    mc:Ignorable="d"
+    d:DesignWidth="400">
+    
+    <Grid x:Name="Settings"
+          Background="{StaticResource ScarletBrush}"
+          Visibility="{Binding IsOpenSettingsPanel, Converter={StaticResource BooleanToVisibilityConverter}}"
+          MinWidth="400">
+        <Grid x:Name="PingSettings"
+              Visibility="{Binding CurrentState.State, Converter={StaticResource EnumToVisibilityConverter}, ConverterParameter=Ping}">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="auto"/>
+                <RowDefinition Height="auto"/>
+            </Grid.RowDefinitions>
+            <StackPanel x:Name="Boxes"
+                        Margin="0,30,0,10"
+                        DataContext="{StaticResource SettingsViewModel}">
+                <CheckBox Content="Ping until stopped"
+                          IsChecked="{Binding CanPingUntilStopped, Mode=TwoWay}"
+                          Style="{StaticResource SettingCheckBox}"/>
+                <CheckBox Content="Force PingIpV4"
+                          IsChecked="{Binding CanPingIpV4, Mode=TwoWay}"
+                          Style="{StaticResource SettingCheckBox}"/>
+                <CheckBox Content="Force PingIpV6"
+                          IsChecked="{Binding CanPingIpV6, Mode=TwoWay}"
+                          Style="{StaticResource SettingCheckBox}"/>
+                <CheckBox Content="Force Hiper-V"
+                          IsChecked="{Binding CanPingHyperV, Mode=TwoWay}"
+                          Style="{StaticResource SettingCheckBox}"/>
+            </StackPanel>
+            <StackPanel x:Name="Fields"
+                        Grid.Row="1"
+                        DataContext="{StaticResource SettingsViewModel}">
+                <TextBlock Text="Requests number"
+                           Style="{StaticResource SettingTextBlock}"/>
+                <TextBox Text="{Binding RequestNumber, Mode=TwoWay}"
+                         PlaceholderText="Enter number"
+                         Style="{StaticResource SettingTextBox}"/>
+
+                <TextBlock Text="Send buffer size"
+                           Style="{StaticResource SettingTextBlock}"/>
+                <TextBox Text="{Binding BufferLength, Mode=TwoWay}"
+                         PlaceholderText="Enter size (bytes)"
+                         Style="{StaticResource SettingTextBox}"/>
+
+                <TextBlock Text="Time to live (TTL)"
+                           Style="{StaticResource SettingTextBlock}"/>
+                <TextBox Text="{Binding Ttl, Mode=TwoWay}" 
+                         PlaceholderText="Enter number"
+                         Style="{StaticResource SettingTextBox}"/>
+
+                <TextBlock Text="Timeout"
+                           Style="{StaticResource SettingTextBlock}"/>
+                <TextBox Text="{Binding PingTimeOut, Mode=TwoWay}" 
+                         PlaceholderText="Enter timeout"
+                         Style="{StaticResource SettingTextBox}"/>
+            </StackPanel>
+        </Grid>
+        <Grid x:Name="TraceSettings"
+              Visibility="{Binding CurrentState.State, Converter={StaticResource EnumToVisibilityConverter}, ConverterParameter=Trace}">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="auto"/>
+                <RowDefinition Height="auto"/>
+            </Grid.RowDefinitions>
+            <StackPanel x:Name="TraceBoxes"
+                        Margin="0,30,0,10"
+                        DataContext="{StaticResource SettingsViewModel}">
+                <CheckBox Content="Don't resolve hostname"
+                          IsChecked="{Binding IsTraceDontResolveAddress, Mode=TwoWay}"
+                          Style="{StaticResource SettingCheckBox}"/>
+                <CheckBox Content="Trace round-trip"
+                          IsChecked="{Binding RoundTrip, Mode=TwoWay}"
+                          Style="{StaticResource SettingCheckBox}"/>
+                <CheckBox Content="Force IPv4"
+                          IsChecked="{Binding CanTraceIpV4, Mode=TwoWay}"
+                          Style="{StaticResource SettingCheckBox}"/>
+                <CheckBox Content="Force IPv6"
+                          IsChecked="{Binding CanTraceIpV6, Mode=TwoWay}"
+                          Style="{StaticResource SettingCheckBox}"/>
+            </StackPanel>
+            <StackPanel x:Name="TraceFields"
+                        Grid.Row="1"
+                        DataContext="{StaticResource SettingsViewModel}">
+                <TextBlock Text="Maximum hops"
+                           Style="{StaticResource SettingTextBlock}"/>
+                <TextBox Text="{Binding MaxHops, Mode=TwoWay}"
+                         PlaceholderText="Enter number"
+                         Style="{StaticResource SettingTextBox}"/>
+
+                <TextBlock Text="Loose source"
+                           Style="{StaticResource SettingTextBlock}"/>
+                <TextBox Text=""      
+                         PlaceholderText="Enter host list"
+                         Style="{StaticResource SettingTextBox}"/>
+
+                <TextBlock Text="Wait timeout"
+                           Style="{StaticResource SettingTextBlock}"/>
+                <TextBox Text="{Binding TraceTimeOut, Mode=TwoWay}"      
+                         PlaceholderText="Enter timeout (ms)"
+                         Style="{StaticResource SettingTextBox}"/>
+
+                <TextBlock Text="Source address"
+                           Style="{StaticResource SettingTextBlock}"/>
+                <TextBox Text="{Binding Source, Mode=TwoWay}"      
+                         PlaceholderText="Enter number"
+                         Style="{StaticResource SettingTextBox}"/>
+            </StackPanel>
+        </Grid>
+    </Grid>
+</UserControl>

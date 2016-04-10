@@ -1,0 +1,90 @@
+﻿<ResourceDictionary
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" 
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:selectors="using:TraceRT.Helpers.TemplateSelectors">
+
+
+    <DataTemplate x:Name="SuccessPingTemplate">
+        <StackPanel Orientation="Horizontal">
+            <TextBlock Text="&#xE165;"
+                               Style="{StaticResource IconStyle}"
+                               Foreground="{StaticResource LightLimeBrush}"/>
+            <Border Style="{StaticResource GreenLabel}">
+                <StackPanel Orientation="Horizontal">
+                    <TextBlock FontSize="20">
+                                <Run Text="Reply from "/>
+                                <Run Text="{Binding Address}"/>
+                                <Run Text=" bytes = "/>
+                                <Run Text="{Binding Buffer.Length}"/>
+                                <Run Text=" time = "/>
+                                <Run Text="{Binding RoundtripTime}"/>
+                                <Run Text=" TTL = "/> 
+                                <Run Text="{Binding Ttl}"/>
+                    </TextBlock>
+                </StackPanel>
+            </Border>
+        </StackPanel>
+    </DataTemplate>
+
+    <DataTemplate x:Name="ErrorPingTemplate">
+        <StackPanel Orientation="Horizontal">
+            <TextBlock Text="&#xE10A;"
+                               Style="{StaticResource IconStyle}"
+                               Foreground="{StaticResource ScarletBrush}"/>
+            <Border Style="{StaticResource RedLabel}">
+                <TextBlock Text="Transmit failed" 
+                           FontSize="20"/>
+            </Border>
+        </StackPanel>
+    </DataTemplate>
+
+    <DataTemplate x:Name="TimeoutPingTemplate">
+        <StackPanel Orientation="Horizontal">
+            <TextBlock Text="&#xE10C;"
+                               Style="{StaticResource IconStyle}"
+                               Foreground="{StaticResource TransportYellowBrush}"/>
+            <Border Style="{StaticResource YellowLabel}">
+                <TextBlock Text="Connection timed out" 
+                           FontSize="20"/>
+            </Border>
+        </StackPanel>
+    </DataTemplate>
+
+    <Style x:Key="PingsListStyle" TargetType="ListView">
+        <Setter Property="ScrollViewer.VerticalScrollMode" Value="Auto"/>
+        <Setter Property="ScrollViewer.VerticalScrollBarVisibility" Value="Auto"/>
+        <Setter Property="ShowsScrollingPlaceholders" Value="True"/>
+        <Setter Property="ItemTemplate">
+            <Setter.Value>
+                <DataTemplate>
+                    <StackPanel Orientation="Horizontal">
+                        <TextBlock Text="&#xE1F2;"
+                                       FontSize="25"
+                                       VerticalAlignment="Center"
+                                       Foreground="{StaticResource ScarletBrush}"
+                                       FontFamily="Segoe UI Symbol"/>
+                        <Border Style="{StaticResource RedLabel}"
+                                MinWidth="300"
+                                VerticalAlignment="Center">
+                            <TextBlock FontSize="20"
+                                       FontWeight="Medium"
+                                       Text="{Binding Host}"
+                                       Margin="20,0,0,5"/>
+                        </Border>
+                    </StackPanel>
+                </DataTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <Style x:Key="PingResultListStyle" TargetType="ItemsControl">
+        <Setter Property="ItemTemplateSelector">
+            <Setter.Value>
+                <selectors:PingTemplateSelector SuccessTemplate="{StaticResource SuccessPingTemplate}"
+                                                TimeOutTemplate="{StaticResource TimeoutPingTemplate}"
+                                                ErrorTemplate="{StaticResource ErrorPingTemplate}"/>
+            </Setter.Value>
+        </Setter>
+    </Style>
+    
+</ResourceDictionary>

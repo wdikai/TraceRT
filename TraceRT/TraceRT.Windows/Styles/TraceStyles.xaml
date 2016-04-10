@@ -1,0 +1,78 @@
+﻿<ResourceDictionary
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" 
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:selectors="using:TraceRT.Helpers.TemplateSelectors"
+    xmlns:local="using:TraceRT.Styles">
+
+
+    <DataTemplate x:Name="SuccessTrace">
+        <StackPanel Orientation="Horizontal">
+            <TextBlock Text="&#xE139;"
+                           FontSize="40"
+                           Foreground="{StaticResource LightLimeBrush}"
+                           FontFamily="Segoe UI Symbol"/>
+            <Border Style="{StaticResource GreenLabel}"
+                            Width="90">
+                <TextBlock FontSize="20">
+                                        <Run Text="{Binding RoundtripTime}"/>
+                                        <Run Text="ms"/>
+                </TextBlock>
+            </Border>
+            <Border Style="{StaticResource GreenLabel}">
+                <TextBlock FontSize="20" Text="{Binding Address}"/>
+            </Border>
+        </StackPanel>
+    </DataTemplate>
+
+    <DataTemplate x:Name="WarningTrace">
+        <StackPanel Orientation="Horizontal">
+            <TextBlock Text="&#xE139;"
+                           FontSize="40"
+                           Foreground="{StaticResource ScarletBrush}"
+                           FontFamily="Segoe UI Symbol"/>
+            <Border Style="{StaticResource RedLabel}"
+                            Width="90">
+                <TextBlock FontSize="20" Text="** ms"/>
+            </Border>
+            <Border Style="{StaticResource RedLabel}">
+                <TextBlock FontSize="20" Text="Timed out"/>
+            </Border>
+        </StackPanel>
+    </DataTemplate>
+
+    <Style x:Key="TracesListStyle" TargetType="ListView">
+        <Setter Property="ScrollViewer.VerticalScrollMode" Value="Auto"/>
+        <Setter Property="ScrollViewer.VerticalScrollBarVisibility" Value="Auto"/>
+        <Setter Property="ShowsScrollingPlaceholders" Value="True"/>
+        <Setter Property="ItemTemplate">
+            <Setter.Value>
+                <DataTemplate >
+                    <StackPanel Orientation="Horizontal">
+                        <TextBlock Text="&#xE139;"
+                                       FontSize="25"
+                                       VerticalAlignment="Center"
+                                       Foreground="{StaticResource ScarletBrush}"
+                                       FontFamily="Segoe UI Symbol"/>
+                        <Border Style="{StaticResource RedLabel}"
+                                MinWidth="300"
+                                VerticalAlignment="Center">
+                            <TextBlock FontSize="20"
+                                       FontWeight="Medium"
+                                       Text="{Binding Host}"
+                                       Margin="20,0,0,5"/>
+                        </Border>
+                    </StackPanel>
+                </DataTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <Style x:Key="TraceResultListStyle" TargetType="ItemsControl">
+        <Setter Property="ItemTemplateSelector">
+            <Setter.Value>
+                <selectors:TraceTemplateSelector SuccessTemplate="{StaticResource SuccessTrace}"
+                                                 WarningTemplate="{StaticResource WarningTrace}"/>
+            </Setter.Value>
+        </Setter>
+    </Style>
+</ResourceDictionary>
